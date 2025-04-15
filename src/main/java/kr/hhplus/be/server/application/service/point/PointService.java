@@ -33,7 +33,7 @@ public class PointService implements GetUserPointUseCase {
     }
 
     @Override
-    public UserPoint setPointCharge(long userId, long amount) {
+    public UserPoint doPointCharge(long userId, long amount) {
         UserPoint userPoint = getUserPoint(userId);
         userPoint.charge(amount);
         pointPort.savePoint(userPoint);
@@ -42,7 +42,7 @@ public class PointService implements GetUserPointUseCase {
     }
 
     @Override
-    public UserPoint setPointUse(long userId, long amount) {
+    public UserPoint doPointUse(long userId, long amount) {
         UserPoint userPoint = getUserPoint(userId);
         userPoint.use(amount);
         pointPort.usePoint(userPoint);

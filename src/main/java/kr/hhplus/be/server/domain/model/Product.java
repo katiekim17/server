@@ -3,14 +3,15 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 // ERD에서 상품정보테이블, item_info
+@Getter
 public class Product {
-    @Getter private final Long productId;
-    @Getter private final String name;
-    @Getter private final int price;
-    @Getter private final Long registerId;
-    @Getter private final int category;
-    @Getter private final LocalDateTime createdAt;
-    @Getter private final LocalDateTime updatedAt;
+    private final Long productId;
+    private final String name;
+    private final int price;
+    private final Long registerId;
+    private final int category;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
 
     // 생성자 생성
@@ -27,11 +28,6 @@ public class Product {
 
     // 비즈니스 로직 작성
     // **"도메인의 핵심 정책, 규칙, 판단"**이 들어간 코드들 == 비즈니스 로직
-    // TODO 아이디로 상품정보 조회 -> 상품정보 가져옴
-
-
-    // TODO 이름으로 상품정보 조회 -> 상품정보 가져옴
-
     // 가격이 무료인지 판단
     public boolean isFree(){
         return this.price == 0;
@@ -41,8 +37,6 @@ public class Product {
     public boolean isSameName(String keyword) {
         return name.contains(keyword);
     }
-
-
 
 }
 
