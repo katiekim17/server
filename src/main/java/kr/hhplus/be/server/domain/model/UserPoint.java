@@ -1,16 +1,33 @@
 package kr.hhplus.be.server.domain.model;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "user_point")
 public class UserPoint {
-    private final Long userId;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
     private Long point;
     private LocalDateTime updatedAt;
 
     static final long MAX_POINT_LIMIT = 1000L;
+
+//    protected UserPoint() {
+//        // JPA 기본 생성자
+//    }
+
+    public UserPoint(Long point, LocalDateTime updatedAt) {
+        if (point < 0) throw new IllegalArgumentException("포인트는 0 이상이어야 합니다");
+        this.point = point;
+        this.updatedAt = updatedAt;
+    }
 
     public UserPoint(Long userId, Long point, LocalDateTime updatedAt) {
         if (point < 0) throw new IllegalArgumentException("포인트는 0 이상이어야 합니다");

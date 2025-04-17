@@ -19,7 +19,7 @@ public interface GetOrderUseCase {
 
 
     Order placeOrder(Long userId, Order items);
-    List<Coupon> searchMyCoupon(Long userId); // 쿠폰 조회 요청, 사용자 쿠폰 테이블에서 쿠폰조회 요청 ->사용자가 가지고 있는 쿠폰 리스트 받음
+    List<Coupon> searchMyCoupons(Long userId); // 쿠폰 조회 요청, 사용자 쿠폰 테이블에서 쿠폰조회 요청 ->사용자가 가지고 있는 쿠폰 리스트 받음
 
     void payOrder(Long userId, Long orderId);
 

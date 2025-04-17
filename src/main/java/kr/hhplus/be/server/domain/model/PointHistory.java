@@ -13,10 +13,9 @@ public class PointHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // 기본 키
-
     private Long userId;
     private Long amount;
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private TransactionType type;
     private LocalDateTime createdAt;
 

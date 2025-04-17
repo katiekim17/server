@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.application.service.product;
 
-import kr.hhplus.be.server.application.port.out.LoadProductPort;
+import kr.hhplus.be.server.application.port.out.ProductPort;
 import kr.hhplus.be.server.domain.model.Product;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,13 +21,14 @@ import static org.mockito.Mockito.when;
 class ProductServiceTest {
 
     //가짜 객체가져오기
-    @Mock LoadProductPort loadProductPort;
+    @Mock ProductPort productPort;
+//    @InjectMocks GetProductUseCase getProductUseCase;
     @InjectMocks ProductService getProductService;
 
     final long ANY_ID = 1L;
     final int category = 5;
     final LocalDateTime createdAt = now();
-    final LocalDateTime updatedAt = now();
+//    final LocalDateTime updatedAt = now();
 
     @Test
     @DisplayName("아이디를 가지고 상품을 정상적으로 조회한다")
@@ -35,7 +36,7 @@ class ProductServiceTest {
 
         // given
         Product product = new Product(ANY_ID, "운동화", 10000, 99L, 1, now(), now());
-        when(loadProductPort.loadById(ANY_ID)).thenReturn(product);
+        when(productPort.loadById(ANY_ID)).thenReturn(product);
 
         // when
         Product result = getProductService.getProductById(ANY_ID);
@@ -53,7 +54,7 @@ class ProductServiceTest {
         List<Product> mockResult = new ArrayList<>();
         Product product = new Product(ANY_ID, "운동화", 10000, 99L, 1, now(), now());
         mockResult.add(product);
-        when(loadProductPort.loadByName("운동화")).thenReturn(mockResult);
+        when(productPort.loadByName("운동화")).thenReturn(mockResult);
 
         // when
         List<Product> result = getProductService.getProductByName("운동화");

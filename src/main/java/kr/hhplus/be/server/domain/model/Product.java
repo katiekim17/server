@@ -1,17 +1,26 @@
 package kr.hhplus.be.server.domain.model;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 // ERD에서 상품정보테이블, item_info
+@Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "product")
 public class Product {
-    private final Long productId;
-    private final String name;
-    private final int price;
-    private final Long registerId;
-    private final int category;
-    private final LocalDateTime createdAt;
-    private final LocalDateTime updatedAt;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long productId;
+    private String name;
+    private int price;
+    private Long registerId;
+    private int category;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 
     // 생성자 생성

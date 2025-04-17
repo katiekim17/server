@@ -1,22 +1,39 @@
 package kr.hhplus.be.server.domain.model;
 
+import jakarta.persistence.*;
 import kr.hhplus.be.server.domain.type.OrderStatus;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "order")
 public class Order {
-    private final Long orderId;
-    private final Long userId;
-    private final List<OrderItem> items;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderId;
+    private Long userId;
+    @OneToMany
+    private List<OrderItem> items;
     private int totalPrice;
     private OrderStatus status;
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     public Order(Long orderId, Long userId, List<OrderItem> items, int totalPrice, OrderStatus status, LocalDateTime createdAt) {
         this.orderId = orderId;
+        this.userId = userId;
+        this.items = items;
+        this.totalPrice = totalPrice;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public Order(Long userId, List<OrderItem> items, int totalPrice, OrderStatus status, LocalDateTime createdAt) {
         this.userId = userId;
         this.items = items;
         this.totalPrice = totalPrice;

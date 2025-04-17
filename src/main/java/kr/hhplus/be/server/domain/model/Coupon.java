@@ -1,25 +1,35 @@
 package kr.hhplus.be.server.domain.model;
 
+import jakarta.persistence.*;
 import kr.hhplus.be.server.domain.type.DiscountType;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "coupon")
 public class Coupon {
-    private final Long id;
-    private final String code;
-    private final DiscountType discountType;
-    private final BigDecimal discountValue;
-    private final BigDecimal minOrderAmount;
-    private final BigDecimal maxDiscountAmount;
-    private final LocalDateTime startDate;
-    private final LocalDateTime endDate;
-    private final boolean isActive;
-    private final LocalDateTime createdAt;
-    private final LocalDateTime updatedAt;
 
-    public Coupon(Long id, String code, DiscountType discountType, BigDecimal discountValue, BigDecimal minOrderAmount, BigDecimal maxDiscountAmount, LocalDateTime startDate, LocalDateTime endDate, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String code;
+    private DiscountType discountType;
+    private BigDecimal discountValue;
+    private BigDecimal minOrderAmount;
+    private BigDecimal maxDiscountAmount;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private boolean isActive;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public Coupon(String code, DiscountType discountType, BigDecimal discountValue, BigDecimal minOrderAmount, BigDecimal maxDiscountAmount, LocalDateTime startDate, LocalDateTime endDate, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.code = code;
         this.discountType = discountType;
         this.discountValue = discountValue;
@@ -31,4 +41,6 @@ public class Coupon {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    
 }
