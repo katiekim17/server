@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.config.jpa;
+package kr.hhplus.be.server.config;
 
 import kr.hhplus.be.server.filter.LoggingFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
