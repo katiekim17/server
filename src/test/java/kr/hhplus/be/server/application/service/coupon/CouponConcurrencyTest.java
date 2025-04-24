@@ -31,9 +31,11 @@ public class CouponConcurrencyTest {
     private final BigDecimal maxDiscountAmount = new BigDecimal("10000");
     private final int totalCount = 10;
 
+    Coupon coupon;
+
     @BeforeEach
     void setup() {
-        Coupon coupon = getCoupon();
+        coupon = getCoupon();
         coupon.totalCount = 5;
         coupon.issuedCount = 0;
         couponPort.save(coupon);
@@ -45,14 +47,14 @@ public class CouponConcurrencyTest {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
 
-        Coupon coupon = couponPort.findCouponById(getCoupon().getId());
+        Coupon couponTest = couponPort.findCouponById(coupon.getId());
 
         for (int i = 0; i < threadCount; i++) {
             executor.execute(() -> {
                 boolean retry = true;
                 while (retry) {
                     try {
-                        couponService.issueCoupon(ANY_USER_ID, coupon.getId());
+                        couponService.issueCoupon(ANY_USER_ID, couponTest.getId());
                         retry = false;  // 성공 시 종료
                     } catch (ObjectOptimisticLockingFailureException e) {
                         System.out.println("낙관적 락 충돌! 재시도 중...");

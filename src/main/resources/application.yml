@@ -14,7 +14,7 @@ spring:
   jpa:
     open-in-view: false
     generate-ddl: false
-    show-sql: true # Jpa 수행 시 SQL문 로그 출력
+    show-sql: false # Jpa 수행 시 SQL문 로그 출력
     hibernate:
       ddl-auto: create
     properties:
