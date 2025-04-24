@@ -30,6 +30,7 @@ public class CouponService implements GetCouponUseCase {
 
         // 쿠폰 발행 숫자 만큼 전체 쿠폰 수량 차감
         coupon.issueCount();
+        // 쿠폰 발행된 결과 저장
         couponPort.save(coupon);
 
         // 유저에게 쿠폰 발급

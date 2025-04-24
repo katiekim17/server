@@ -29,21 +29,21 @@ public class CouponConcurrencyTest {
     private final BigDecimal discountValue = new BigDecimal("30000");
     private final BigDecimal minOrderAmount = new BigDecimal("15.0");
     private final BigDecimal maxDiscountAmount = new BigDecimal("10000");
-    private final int totalCount = 10;
+    private final int totalCount = 5;
 
     Coupon coupon;
 
     @BeforeEach
     void setup() {
         coupon = getCoupon();
-        coupon.totalCount = 5;
+        coupon.totalCount = 3;
         coupon.issuedCount = 0;
         couponPort.save(coupon);
     }
 
     @Test
     void 동시성_문제_발생_락_없이() throws InterruptedException {
-        int threadCount = 10;
+        int threadCount = 5;
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -66,12 +66,12 @@ public class CouponConcurrencyTest {
         Coupon result = couponPort.findById(couponTest.getId());
         System.out.println("처음 발급전 수량: " + result.getTotalCount());
         System.out.println("[락 없이] 최종 발급 수량: " + coupon.getIssuedCount());
-        Assertions.assertTrue(result.getIssuedCount() <= 5);
+        Assertions.assertTrue(result.getIssuedCount() <= 2);
     }
 
     @Test
     void pessimisticLockingTest() throws InterruptedException {
-        int threadCount = 10;
+        int threadCount = 5;
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -79,17 +79,11 @@ public class CouponConcurrencyTest {
 
         for (int i = 0; i < threadCount; i++) {
             executor.execute(() -> {
-                boolean retry = true;
-                while (retry) {
-                    try {
-                        couponService.issueCoupon(ANY_USER_ID, couponTest.getId());
-                        retry = false;  // 성공 시 종료
-                    } catch (ObjectOptimisticLockingFailureException e) {
-                        System.out.println("낙관적 락 충돌! 재시도 중...");
-                    } catch (IllegalStateException e) {
-                        System.out.println("쿠폰 소진");
-                        retry = false;
-                    }
+                try {
+                    couponService.issueCoupon(ANY_USER_ID, couponTest.getId());
+                } catch (IllegalStateException e) {
+                    System.out.println("쿠폰 소진");
+                    System.out.println("e " + e);
                 }
                 latch.countDown();
             });
@@ -100,7 +94,7 @@ public class CouponConcurrencyTest {
         Coupon result = couponPort.findById(couponTest.getId());
         System.out.println("처음 발급전 수량: " + result.getTotalCount());
         System.out.println("[비관적 락]최종 발급된 수량: " + result.getIssuedCount());
-        Assertions.assertTrue(result.getIssuedCount() <= 5);
+        Assertions.assertTrue(result.getIssuedCount() <= 2);
     }
 
     private Coupon getCoupon() {

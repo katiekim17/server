@@ -120,18 +120,17 @@ public class Coupon {
     // 쿠폰 발행 숫자 만큼 전체 쿠폰 수량 차감
     public void issueCount() {
         this.issue();
-        this.totalCount--;
     }
 
     public void issue(){
-        if (this.issuedCount >= this.totalCount) {
+        if (this.issuedCount > this.totalCount) {
             throw new IllegalStateException("쿠폰 발행 수량 초과");
         }
         if (this.totalCount <= 0) {
-            throw new IllegalStateException("쿠폰 수량이 없음");
+            throw new IllegalStateException("쿠폰 전체 수량이 없음");
         }
         if (this.issuedCount <= 0) {
-            throw new IllegalStateException("쿠폰 발행 수량이 없음");
+            throw new IllegalStateException("발행된 쿠폰이 없음");
         }
         this.issuedCount++;
     }
