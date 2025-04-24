@@ -12,11 +12,11 @@ import java.util.List;
 @Tag(name = "상품 API")
 public interface ProductApi {
 
-    @Operation(summary = "상품 단건 조회")
-    @GetMapping("/{id}")
-    ResponseEntity<ProductResponse> getProductById(@PathVariable Long id);
-
-    @Operation(summary = "상품 이름으로 조회")
-    @GetMapping("/search")
-    ResponseEntity<List<ProductResponse>> getProductByName(@RequestParam String name);
+//    @Operation(summary = "상품 단건 조회")
+//    @GetMapping("/{id}")
+//    ResponseEntity<ProductResponse> getProductById(@PathVariable Long id);
+//
+//    @Operation(summary = "상품 이름으로 조회")
+//    @GetMapping("/search")
+//    ResponseEntity<List<ProductResponse>> getProductByName(@RequestParam String name);
 }

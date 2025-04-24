@@ -12,16 +12,16 @@ import java.util.List;
 //- 데이터 분석을 위해 결제 성공 시에 실시간으로 주문 정보를 데이터 플랫폼에 전송해야 합니다. ( 데이터 플랫폼이 어플리케이션 `외부` 라는 가정만 지켜 작업해 주시면 됩니다 )
 public interface GetOrderUseCase {
 
-    Order verifyOrder(Long userId, List<OrderItem> items);     // 임시 재고 수량 계산
+//    Order verifyOrder(Long userId, List<OrderItem> items);     // 임시 재고 수량 계산
 
     // 쿠폰 넣은 최종 상품 값
-    List<Order> useCoupon(Long userId, Order order);
-
-
-    Order placeOrder(Long userId, Order items);
-    List<Coupon> searchMyCoupons(Long userId); // 쿠폰 조회 요청, 사용자 쿠폰 테이블에서 쿠폰조회 요청 ->사용자가 가지고 있는 쿠폰 리스트 받음
-
-    void payOrder(Long userId, Long orderId);
+//    List<Order> useCoupon(Long userId, Order order);
+//
+//
+//    Order placeOrder(Long userId, Order items);
+//    List<Coupon> searchMyCoupons(Long userId); // 쿠폰 조회 요청, 사용자 쿠폰 테이블에서 쿠폰조회 요청 ->사용자가 가지고 있는 쿠폰 리스트 받음
+//
+//    void payOrder(Long userId, Long orderId);
 
 
     // 재고 테이블에 해당 상품의 임시재고 수량의 데이터를 변경
