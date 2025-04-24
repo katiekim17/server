@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 //private int confirmedStock; // 확정 재고
 
 public interface InventoryPort {
-    Inventory getInventory(Long productId);
-    void reserveTempStock(Long userId, OrderItem item, LocalDateTime now); // 주문정보 임시로 저장(장바구니, 혹은 주문 완료전 임시저장)
-    void confirmStock(Long productId, int quantity);
-
-    Inventory checkInventory(Long productId);
-
-    void save(Inventory inventory);
+//    Inventory getInventory(Long productId);
+//    void reserveTempStock(Long userId, OrderItem item, LocalDateTime now); // 주문정보 임시로 저장(장바구니, 혹은 주문 완료전 임시저장)
+//    void confirmStock(Long productId, int quantity);
+//
+//    Inventory checkInventory(Long productId);
+//
+//    void save(Inventory inventory);
 }
