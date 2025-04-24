@@ -72,14 +72,10 @@ public class CouponServiceTest {
         // of -> coupon != null
         when(couponPort.findCouponById(ANY_COUPON_ID)).thenReturn(coupon);
 
-
         // when
         IssuedCoupon actual = couponService.issueCoupon(ANY_USER_ID, ANY_COUPON_ID);
 
         // then
-//        assertThat(actual.getUserId()).isEqualTo(ANY_ID);
-
-//        verify(couponPort).findById(couponId);                    // 조회 호출 검증
         verify(couponPort,times(1)).saveIssueCoupon(any(IssuedCoupon.class));   // 저장 호출 검증
 
     }

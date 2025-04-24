@@ -31,8 +31,8 @@ public class Coupon {
     private LocalDateTime startDate; // 쿠폰 사용 시작일
     private LocalDateTime endDate;  // 쿠폰 사용 종료일
     private boolean isActive; // 쿠폰 사용 가능 여부
-    private int totalCount; // 쿠폰 발행 가능 수량
-    private int issuedCount; // 쿠폰 발행된 수량
+    public int totalCount; // 쿠폰 발행 가능 수량
+    public int issuedCount; // 쿠폰 발행된 수량
 
     @CreationTimestamp
     private LocalDateTime createdAt; // 쿠폰 등록일
@@ -40,8 +40,8 @@ public class Coupon {
     @UpdateTimestamp
     private LocalDateTime updatedAt; // 쿠폰 수정일
 
-    @Version // 낙관적 락에서 사용
-    private Long version;
+//    @Version // 낙관적 락에서 사용
+//    private Long version;
 
 //    public static Coupon of(String code, DiscountType discountType, BigDecimal discountValue,
 //                            BigDecimal minOrderAmount, BigDecimal maxDiscountAmount,
@@ -106,6 +106,8 @@ public class Coupon {
             throw new IllegalArgumentException("유저가 없음");
         }
 
+        issue();
+
         return new IssuedCoupon(
                 userId,
                 this,
@@ -115,10 +117,24 @@ public class Coupon {
         );
     }
 
+    // 쿠폰 발행 숫자 만큼 전체 쿠폰 수량 차감
+    public void issueCount() {
+        this.issue();
+        this.totalCount--;
+    }
+
     public void issue(){
         if (this.issuedCount >= this.totalCount) {
             throw new IllegalStateException("쿠폰 발행 수량 초과");
         }
+        if (this.totalCount <= 0) {
+            throw new IllegalStateException("쿠폰 수량이 없음");
+        }
+        if (this.issuedCount <= 0) {
+            throw new IllegalStateException("쿠폰 발행 수량이 없음");
+        }
         this.issuedCount++;
     }
+
+
 }
