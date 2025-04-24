@@ -20,6 +20,7 @@ public class CouponService implements GetCouponUseCase {
         return couponPort.save(reqCoupon.getCoupon(reqCoupon));
     }
 
+
     @Transactional
     @Override
     public IssuedCoupon issueCoupon(Long userId, Long couponId) {

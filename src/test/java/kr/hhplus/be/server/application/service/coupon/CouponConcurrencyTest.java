@@ -1,6 +1,5 @@
 package kr.hhplus.be.server.application.service.coupon;
 
-import jakarta.transaction.Transactional;
 import kr.hhplus.be.server.application.port.out.CouponPort;
 import kr.hhplus.be.server.domain.model.Coupon;
 import kr.hhplus.be.server.domain.type.DiscountType;
@@ -64,8 +63,10 @@ public class CouponConcurrencyTest {
 
         latch.await();
 
-        Coupon coupon = couponPort.findById(couponTest.getId());
+        Coupon result = couponPort.findById(couponTest.getId());
+        System.out.println("처음 발급전 수량: " + result.getTotalCount());
         System.out.println("[락 없이] 최종 발급 수량: " + coupon.getIssuedCount());
+        Assertions.assertTrue(result.getIssuedCount() <= 5);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class CouponConcurrencyTest {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
 
-        Coupon couponTest = couponPort.findCouponById(coupon.getId());
+        Coupon couponTest = couponPort.findById(coupon.getId());
 
         for (int i = 0; i < threadCount; i++) {
             executor.execute(() -> {
@@ -96,8 +97,9 @@ public class CouponConcurrencyTest {
 
         latch.await();
 
-        Coupon result = couponPort.findCouponById(coupon.getId());
-        System.out.println("최종 발급된 수량: " + result.getIssuedCount());
+        Coupon result = couponPort.findById(couponTest.getId());
+        System.out.println("처음 발급전 수량: " + result.getTotalCount());
+        System.out.println("[비관적 락]최종 발급된 수량: " + result.getIssuedCount());
         Assertions.assertTrue(result.getIssuedCount() <= 5);
     }
 

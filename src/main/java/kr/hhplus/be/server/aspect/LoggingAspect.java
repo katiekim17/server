@@ -12,12 +12,12 @@ public class LoggingAspect {
 
     @Before("execution(* kr.hhplus.be.server..*Service.*(..))")
     public void logBefore(JoinPoint joinPoint) {
-        System.out.println(">> 서비스 시작: " + joinPoint.getSignature());
+//        System.out.println(">> 서비스 시작: " + joinPoint.getSignature());
     }
 
     @AfterReturning("execution(* kr.hhplus.be.server..*Service.*(..))")
     public void logAfter() {
-        System.out.println("<< 서비스 끝");
+//        System.out.println("<< 서비스 끝");
     }
 
 }
