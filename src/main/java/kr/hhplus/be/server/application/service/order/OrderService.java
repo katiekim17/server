@@ -3,20 +3,9 @@ package kr.hhplus.be.server.application.service.order;
 import kr.hhplus.be.server.application.port.in.GetOrderUseCase;
 import kr.hhplus.be.server.application.port.out.CouponPort;
 import kr.hhplus.be.server.application.port.out.InventoryPort;
-//import kr.hhplus.be.server.application.port.out.OrderPort;
 import kr.hhplus.be.server.application.port.out.PaymentPort;
-import kr.hhplus.be.server.domain.model.Coupon;
-import kr.hhplus.be.server.domain.model.Inventory;
-import kr.hhplus.be.server.domain.model.Order;
-import kr.hhplus.be.server.domain.model.OrderItem;
-import kr.hhplus.be.server.domain.type.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
