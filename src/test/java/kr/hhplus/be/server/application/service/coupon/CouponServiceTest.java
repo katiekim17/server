@@ -40,29 +40,6 @@ public class CouponServiceTest {
     private Coupon coupon;
     private IssuedCoupon issuedCoupon;
 
-//    @BeforeEach
-//    void setUp(){
-//        coupon = new Coupon("NEWYEAR2025",
-//                DiscountType.FIXED,
-//                discountValue,
-//                minOrderAmount,
-//                maxDiscountAmount,
-//                LocalDateTime.of(2025, 1, 1, 0, 0),
-//                LocalDateTime.of(2025, 12, 31, 23, 59),
-//                true,
-//                LocalDateTime.of(2025, 1, 1, 0, 0),
-//                LocalDateTime.of(2025, 12, 31, 23, 59)
-//        );
-//
-//        issuedCoupon = new IssuedCoupon(
-//                ANY_ID,
-//                coupon,
-//                LocalDateTime.of(2025, 1, 1, 0, 0),
-//                true,
-//                LocalDateTime.of(2025, 12, 31, 23, 59)
-//        );
-//    }
-
     @Test
     @DisplayName("쿠폰을 성공적으로 발행한다")
     void issueCoupon() {
@@ -128,16 +105,6 @@ public class CouponServiceTest {
         // of -> coupon != null
         when(couponPort.findCouponById(ANY_COUPON_ID)).thenReturn(coupon);
 
-        // 유저에게 쿠폰을 발급한다
-//        IssuedCoupon expected = new IssuedCoupon(
-//                ANY_ID,
-//                coupon,
-//                LocalDateTime.of(2025, 1, 1, 0, 0),
-//                true,
-//                LocalDateTime.of(2025, 12, 31, 23, 59)
-//        );
-//
-//        when(couponPort.issueCouponToUser(ANY_COUPON_ID)).thenReturn(expected);
 
         // when
         IssuedCoupon actual = couponService.issueCoupon(ANY_USER_ID, ANY_COUPON_ID);
@@ -177,24 +144,19 @@ public class CouponServiceTest {
                 LocalDateTime.of(2025, 4, 4, 5, 0)
         );
 
-
         // 쿠폰 아이디로 쿠폰을 조회한다
         // Optional을 쓰면 “여기에 값이 있을 수도, 없을 수도 있다”는 의도를 명시
         // 정의 하는 구간
         when(couponPort.findCouponByUserId(ANY_COUPON_ID, ANY_USER_ID)).thenReturn(issuedCoupon);
         when(couponPort.saveIssueCoupon(any(IssuedCoupon.class))).thenReturn(issuedCoupon);
 
-
         // when
         IssuedCoupon actual = couponService.useCoupon(ANY_USER_ID, ANY_COUPON_ID);
-
 
         // then
         assertThat(actual.getUserId()).isEqualTo(ANY_USER_ID);
         assertThat(actual.getCoupon()).isEqualTo(coupon);
-//        verify(couponPort).findById(couponId);                    // 조회 호출 검증
         verify(couponPort,times(1)).saveIssueCoupon(any(IssuedCoupon.class));   // 저장 호출 검증
-
 
     }
 
