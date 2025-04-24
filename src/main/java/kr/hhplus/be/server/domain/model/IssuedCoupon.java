@@ -36,12 +36,35 @@ public class IssuedCoupon {
         this.usedAt = usedAt;
     }
 
+    public IssuedCoupon getIssued(Long userId, Coupon coupon) {
+        if (coupon == null) {
+            throw new IllegalArgumentException("쿠폰이 없음: " + this.getCoupon().getId());
+        }
+
+        // 이미 사용된 쿠폰인지 확인
+        if (this.isUsed) {
+            throw new IllegalArgumentException("이미 사용된 쿠폰임: " + this.getCoupon().getId());
+        }
+
+        return new IssuedCoupon(
+                userId,
+                coupon,
+                LocalDateTime.now(),
+                false,
+                null
+        );
+    }
+
     // 이미 발행된 상태로 쿠폰 상태변환
     public void markAsUsed(LocalDateTime usedAt) {
-        if (this.isUsed) {
-            throw new IllegalStateException("Already used");
-        }
         this.isUsed = true;
         this.usedAt = usedAt;
+    }
+
+    public void use() {
+
+        // 발급한 쿠폰이 사용한 상태로 상태변환
+        markAsUsed(LocalDateTime.now());
+
     }
 }

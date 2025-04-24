@@ -1,12 +1,10 @@
 package kr.hhplus.be.server.application.service.coupon;
 
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import kr.hhplus.be.server.application.port.out.CouponPort;
 import kr.hhplus.be.server.domain.model.Coupon;
 import kr.hhplus.be.server.domain.model.IssuedCoupon;
 import kr.hhplus.be.server.domain.type.DiscountType;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +35,8 @@ public class CouponServiceTest {
     private final BigDecimal discountValue = new BigDecimal("30000");
     private final BigDecimal minOrderAmount = new BigDecimal("15.0");
     private final BigDecimal maxDiscountAmount = new BigDecimal("10000");
+    private final int totalCount = 10;
+    private final int issuedCount = 0;
     private Coupon coupon;
     private IssuedCoupon issuedCoupon;
 
@@ -45,31 +45,9 @@ public class CouponServiceTest {
     void issueCoupon() {
         // given - 등록할 쿠폰 정보가 있어야 하고
         // 쿠폰 디비에 등록하면 아래가 나와야함.
-        Coupon coupon = new Coupon("NEWYEAR2025",
-                DiscountType.FIXED,
-                discountValue,
-                minOrderAmount,
-                maxDiscountAmount,
-                LocalDateTime.of(2025, 1, 1, 0, 0),
-                LocalDateTime.of(2025, 12, 31, 23, 59),
-                true,
-                LocalDateTime.of(2025, 1, 1, 0, 0),
-                LocalDateTime.of(2025, 12, 31, 23, 59)
-        );
+        Coupon coupon = getCoupon();
 
-        Coupon expectedCoupon = new Coupon(
-                coupon.getCode(),
-                coupon.getDiscountType(),
-                coupon.getDiscountValue(),
-                coupon.getMinOrderAmount(),
-                coupon.getMaxDiscountAmount(),
-                coupon.getStartDate(),
-                coupon.getEndDate(),
-                coupon.isActive(),
-                LocalDateTime.now(),
-                LocalDateTime.now()
-        );
-        when(couponPort.save(any(Coupon.class))).thenReturn(expectedCoupon);
+        when(couponPort.save(any())).thenReturn(coupon);
 
         // when - 디비에 저장
         Coupon result = couponService.createCoupon(coupon);
@@ -87,18 +65,7 @@ public class CouponServiceTest {
     @DisplayName("유저에게 쿠폰 발급한다")
     void issueCouponToUser(){
         // given
-        Coupon coupon = new Coupon(
-                "NEWYEAR2025",
-                DiscountType.FIXED,
-                discountValue,
-                minOrderAmount,
-                maxDiscountAmount,
-                LocalDateTime.of(2025, 1, 1, 0, 0),
-                LocalDateTime.of(2025, 12, 31, 23, 59),
-                true,
-                LocalDateTime.of(2025, 1, 1, 0, 0),
-                LocalDateTime.of(2025, 12, 31, 23, 59)
-        );
+        Coupon coupon = getCoupon();
 
         // 쿠폰 아이디로 쿠폰을 조회한다
         // Optional을 쓰면 “여기에 값이 있을 수도, 없을 수도 있다”는 의도를 명시
@@ -123,26 +90,9 @@ public class CouponServiceTest {
     void useCoupon(){
 
         // given
-        Coupon coupon = new Coupon(
-                "NEWYEAR2025",
-                DiscountType.FIXED,
-                discountValue,
-                minOrderAmount,
-                maxDiscountAmount,
-                LocalDateTime.of(2025, 1, 1, 0, 0),
-                LocalDateTime.of(2025, 12, 31, 23, 59),
-                true,
-                LocalDateTime.of(2025, 1, 1, 0, 0),
-                LocalDateTime.of(2025, 12, 31, 23, 59)
-        );
+        Coupon coupon = getCoupon();
 
-        IssuedCoupon issuedCoupon = new IssuedCoupon(
-                ANY_USER_ID,
-                coupon,
-                LocalDateTime.of(2025, 1, 1, 0, 0),
-                false,
-                LocalDateTime.of(2025, 4, 4, 5, 0)
-        );
+        IssuedCoupon issuedCoupon = getIssuedCoupon(coupon);
 
         // 쿠폰 아이디로 쿠폰을 조회한다
         // Optional을 쓰면 “여기에 값이 있을 수도, 없을 수도 있다”는 의도를 명시
@@ -160,5 +110,27 @@ public class CouponServiceTest {
 
     }
 
+    private @NotNull IssuedCoupon getIssuedCoupon(Coupon coupon) {
+        return new IssuedCoupon(
+                ANY_USER_ID,
+                coupon,
+                LocalDateTime.of(2025, 1, 1, 0, 0),
+                false,
+                LocalDateTime.of(2025, 4, 4, 5, 0)
+        );
+    }
+
+    private Coupon getCoupon() {
+        return new Coupon("NEWYEAR2025",
+                DiscountType.FIXED,
+                discountValue,
+                minOrderAmount,
+                maxDiscountAmount,
+                LocalDateTime.of(2025, 1, 1, 0, 0),
+                LocalDateTime.of(2025, 12, 31, 23, 59),
+                true,
+                totalCount
+        );
+    }
 
 }
