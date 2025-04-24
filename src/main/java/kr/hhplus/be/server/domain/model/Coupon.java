@@ -42,5 +42,4 @@ public class Coupon {
         this.updatedAt = updatedAt;
     }
 
-    
 }

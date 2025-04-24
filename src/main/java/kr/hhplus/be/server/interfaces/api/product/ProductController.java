@@ -16,18 +16,18 @@ public class ProductController implements ProductApi {
 
     private final GetProductUseCase getProductUseCase;
 
-    @Override
-    public ResponseEntity<ProductResponse> getProductById(Long id) {
-        Product product = getProductUseCase.getProductById(id);
-        return ResponseEntity.ok(ProductResponse.from(product));
-    }
-
-    @Override
-    public ResponseEntity<List<ProductResponse>> getProductByName(String name) {
-        List<Product> products = getProductUseCase.getProductByName(name);
-        return ResponseEntity.ok(
-                products.stream().map(ProductResponse::from).toList()
-        );
-    }
+//    @Override
+//    public ResponseEntity<ProductResponse> getProductById(Long id) {
+//        Product product = getProductUseCase.getProductById(id);
+//        return ResponseEntity.ok(ProductResponse.from(product));
+//    }
+//
+//    @Override
+//    public ResponseEntity<List<ProductResponse>> getProductByName(String name) {
+//        List<Product> products = getProductUseCase.getProductByName(name);
+//        return ResponseEntity.ok(
+//                products.stream().map(ProductResponse::from).toList()
+//        );
+//    }
 }
 

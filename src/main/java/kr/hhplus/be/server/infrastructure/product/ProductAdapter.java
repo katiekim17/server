@@ -13,15 +13,15 @@ public class ProductAdapter implements ProductPort {
 
     private final ProductRepository productRepository;
 
-    @Override
-    public Product loadById(Long productId) {
-        return null;
-    }
-
-    @Override
-    public List<Product> loadByName(String name) {
-        return List.of();
-    }
+//    @Override
+//    public Product loadById(Long productId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public List<Product> loadByName(String name) {
+//        return List.of();
+//    }
 
 //    @Override
 //    public Product loadById(Long productId) {

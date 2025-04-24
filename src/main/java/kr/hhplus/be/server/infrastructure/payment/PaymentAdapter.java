@@ -10,13 +10,13 @@ public class PaymentAdapter implements PaymentPort {
 
     private final PaymentRepository paymentRepository;
 
-    @Override
-    public boolean pay(Long userId, int amount) {
-        return false;
-    }
-
-    @Override
-    public boolean isPaymentConfirmed(Long userId) {
-        return false;
-    }
+//    @Override
+//    public boolean pay(Long userId, int amount) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isPaymentConfirmed(Long userId) {
+//        return false;
+//    }
 }

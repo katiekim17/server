@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
+//@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "order")
+//@Table(name = "order")
 public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
     private Long userId;
-    @OneToMany
+//    @OneToMany
     private List<OrderItem> items;
     private int totalPrice;
     private OrderStatus status;
@@ -63,16 +63,16 @@ public class Order {
     }
 
 
-    public Order checkOrder(Order confirmedOrder, Order order) {
-
-        if(!confirmedOrder.getOrderId().equals(order.getUserId())
-            || !confirmedOrder.getItems().equals(order.getItems())
-
-        ){
-            throw new IllegalStateException("존재하지 않는 주문입니다. 다시 주문해주세요.");
-        }
-
-        order.complete(); // 상태변경
-        return order;
-    }
+//    public Order checkOrder(Order confirmedOrder, Order order) {
+//
+//        if(!confirmedOrder.getOrderId().equals(order.getUserId())
+//            || !confirmedOrder.getItems().equals(order.getItems())
+//
+//        ){
+//            throw new IllegalStateException("존재하지 않는 주문입니다. 다시 주문해주세요.");
+//        }
+//
+//        order.complete(); // 상태변경
+//        return order;
+//    }
 }

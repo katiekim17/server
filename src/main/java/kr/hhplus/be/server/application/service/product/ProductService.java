@@ -16,14 +16,14 @@ public class ProductService implements GetProductUseCase {
     public ProductService(ProductPort productPort) {
         this.productPort = productPort;
     }
-
-    @Override
-    public Product getProductById(Long productId) {
-        return productPort.loadById(productId);
-    }
-
-    @Override
-    public List<Product> getProductByName(String name) {
-        return productPort.loadByName(name);
-    }
+//
+//    @Override
+//    public Product getProductById(Long productId) {
+//        return productPort.loadById(productId);
+//    }
+//
+//    @Override
+//    public List<Product> getProductByName(String name) {
+//        return productPort.loadByName(name);
+//    }
 }
