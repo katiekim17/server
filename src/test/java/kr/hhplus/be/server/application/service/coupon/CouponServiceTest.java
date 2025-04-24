@@ -117,7 +117,8 @@ public class CouponServiceTest {
     }
 
     private Coupon getCoupon() {
-        return new Coupon("NEWYEAR2025",
+        return new Coupon(
+                "NEWYEAR2025",
                 DiscountType.FIXED,
                 discountValue,
                 minOrderAmount,

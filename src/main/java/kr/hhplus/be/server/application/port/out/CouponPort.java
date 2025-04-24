@@ -3,6 +3,8 @@ package kr.hhplus.be.server.application.port.out;
 import kr.hhplus.be.server.domain.model.Coupon;
 import kr.hhplus.be.server.domain.model.IssuedCoupon;
 
+import java.util.Optional;
+
 
 public interface CouponPort {
 //    List<Coupon> getMyCoupons(Long userId);
