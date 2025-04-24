@@ -39,6 +39,12 @@ public class CouponAdapter implements CouponPort {
 
     @Override
     public Coupon findCouponById(Long userId) {
+        return couponRepository.findByIdWithLock(userId)
+                .orElseThrow(() -> new IllegalArgumentException("쿠폰을 찾을 수 없습니다."));
+    }
+
+    @Override
+    public Coupon findById(Long userId) {
         return couponRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("쿠폰을 찾을 수 없습니다."));
     }

@@ -7,8 +7,6 @@ import java.util.Optional;
 
 
 public interface CouponPort {
-//    List<Coupon> getMyCoupons(Long userId);
-//    Coupon getAvailableCoupons(Long userId);
     Coupon save(Coupon coupon); // 쿠폰 등록
     IssuedCoupon saveIssueCoupon(IssuedCoupon issuedCoupon); // 유저에게 쿠폰 발행
     IssuedCoupon findCouponByUserId(Long issuedCouponId, Long userId); // 유저에게 쿠폰 발행

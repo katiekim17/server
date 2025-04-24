@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.application.service.coupon;
 
+import jakarta.transaction.Transactional;
 import kr.hhplus.be.server.application.port.out.CouponPort;
 import kr.hhplus.be.server.domain.model.Coupon;
 import kr.hhplus.be.server.domain.type.DiscountType;
@@ -39,6 +40,32 @@ public class CouponConcurrencyTest {
         coupon.totalCount = 5;
         coupon.issuedCount = 0;
         couponPort.save(coupon);
+    }
+
+    @Test
+    void 동시성_문제_발생_락_없이() throws InterruptedException {
+        int threadCount = 10;
+        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        Coupon couponTest = couponPort.findById(coupon.getId());
+
+        for (int i = 0; i < threadCount; i++) {
+            executor.execute(() -> {
+                try {
+                    couponService.issueCoupon(ANY_USER_ID, couponTest.getId());
+                } catch (Exception e) {
+                    // 쿠폰 소진 or 동시성 문제
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        Coupon coupon = couponPort.findById(couponTest.getId());
+        System.out.println("[락 없이] 최종 발급 수량: " + coupon.getIssuedCount());
     }
 
     @Test

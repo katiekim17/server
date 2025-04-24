@@ -8,7 +8,6 @@ import kr.hhplus.be.server.domain.model.IssuedCoupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +19,6 @@ public class CouponService implements GetCouponUseCase {
     public Coupon createCoupon(Coupon reqCoupon) {
         return couponPort.save(reqCoupon.getCoupon(reqCoupon));
     }
-
 
     @Transactional
     @Override
@@ -37,6 +35,7 @@ public class CouponService implements GetCouponUseCase {
         return couponPort.saveIssueCoupon(coupon.issueToUser(userId));
 
     }
+
 
 
     @Override
